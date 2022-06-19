@@ -10,7 +10,7 @@
 ?></a></h2>
 <?php // the_content(); 
 ?>
-<hr>1 -->
+<hr>12 -->
 
 
 <div class="page-banner">
