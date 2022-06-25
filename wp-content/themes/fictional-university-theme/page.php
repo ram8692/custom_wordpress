@@ -46,7 +46,7 @@ while (have_posts()) {
                         $findChildrenOf = get_the_ID();
                     }
                     // wp_list_pages() Retrieves or displays a list of pages (or hierarchical post type items) in list (li) format.
-                    wp_list_pages(array('title_li' => NULL, 'child_of' => $findChildrenOf));
+                    wp_list_pages(array('title_li' => NULL, 'child_of' => $findChildrenOf,'sort_column'=>'menu_order'));
                     ?>
                 </ul>
             </div>
