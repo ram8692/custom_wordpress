@@ -1,6 +1,6 @@
 <?php
 get_header();
-
+//Determines whether current WordPress query has posts to loop over.
 while (have_posts()) {
     the_post(); ?>
     <div class="page-banner">
@@ -16,6 +16,7 @@ while (have_posts()) {
     <div class="container container--narrow page-section">
 
         <?php
+        //get the parent id of current page
         $theParent = wp_get_post_parent_id(get_the_ID());
         if ($theParent) { ?>
 
