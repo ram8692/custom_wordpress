@@ -35,8 +35,9 @@ while (have_posts()) {
         ?>
             <div class="page-links">
                 <h2 class="page-links__title"><a href="<?= get_the_permalink($theParent) ?>">
-                <!-- get the title of page get_the_title() -->
-                <?= get_the_title($theParent) ?></a></h2>
+                        <!-- get the title of page get_the_title() -->
+                        <?= get_the_title($theParent) ?>
+                    </a></h2>
                 <ul class="min-list">
                     <?php
                     if ($theParent) {
@@ -46,7 +47,7 @@ while (have_posts()) {
                         $findChildrenOf = get_the_ID();
                     }
                     // wp_list_pages() Retrieves or displays a list of pages (or hierarchical post type items) in list (li) format.
-                    wp_list_pages(array('title_li' => NULL, 'child_of' => $findChildrenOf,'sort_column'=>'menu_order'));
+                    wp_list_pages(array('title_li' => NULL, 'child_of' => $findChildrenOf, 'sort_column' => 'menu_order'));
                     ?>
                 </ul>
             </div>

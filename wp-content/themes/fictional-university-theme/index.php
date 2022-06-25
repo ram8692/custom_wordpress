@@ -31,10 +31,10 @@
       </div>
     </div>
 
-<?php } 
+  <?php }
 
-echo paginate_links();
-?>
+  echo paginate_links();
+  ?>
 
 </div>
 
