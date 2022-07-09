@@ -27,4 +27,22 @@ add_theme_support('title-tag');
 
 add_action('after_setup_theme','university_features');
 
+
+//custom post type we can use in function.php aswlll and from muplugins also
+
+// function university_post_types(){
+//     register_post_type('event',array(
+//         'public'=>true,
+//         'labels'=>array(
+//             'name'=>'Events',
+//             'add_new_item'=>'Add New Event',
+//             'edit_item'=>'Edit Event',
+//             'all_items'=>'All Events',
+//             'singular_name'=>'Event'
+//         ),
+//         'menu_icon'=>'dashicon-calendar'
+//     ));
+// }
+
+// add_action('init','university_post_types');
 ?>
