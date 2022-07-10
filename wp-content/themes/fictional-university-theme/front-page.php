@@ -16,28 +16,47 @@
             <h2 class="headline headline--small-plus t-center">Upcoming Events</h2>
             <?php
             //$homePagePosts = new WP_Query(array('posts_per_page' => 2,'category_name'=>'awards','post_type'=>'page'));eg post or page
-            $homePageEvents = new WP_Query(array('posts_per_page' => 2,'post_type'=>'event','orderby'=>'post_date','order'=>'ASC'));
+            //this below code is usedfull to sort post of event by post date or u can use rand also in orderby
+            //$homePageEvents = new WP_Query(array('posts_per_page' => 2, 'post_type' => 'event', 'orderby' => 'post_date', 'order' => 'ASC'));
+            //meta means extra info which is associated with the post like event date is a custom fields which we have added
+            //$homePageEvents = new WP_Query(array('posts_per_page' => 2, 'post_type' => 'event','meta_key'=>'event_date', 'orderby' => 'meta_value_num', 'order' => 'ASC'));
+            //adding custom queries for filtering out past event date
+            $today = date('Ymd');
+            $homePageEvents = new WP_Query(array(
+                'posts_per_page' => 2,
+                 'post_type' => 'event',
+                 'meta_key'=>'event_date',
+                  'orderby' => 'meta_value_num',
+                   'order' => 'ASC',
+                'meta_query'=>array(
+                    array(
+                        'key'=>'event_date',
+                        'compare'=>'>=',
+                        'value'=>$today,
+                        'type'=>'numeric'
+                    )
+                )));
             while ($homePageEvents->have_posts()) {
                 $homePageEvents->the_post(); ?>
-            <div class="event-summary">
-                <a class="event-summary__date t-center" href="#">
-                    <span class="event-summary__month"><?php //the_time('M')
-                    //the_field('event_date');
-                    $eventDate = new DateTime(get_field('event_date'));
-                    echo $eventDate->format('M');
-                    ?></span>
-                    <span class="event-summary__day"><?php //the_time('d')
-                    echo $eventDate->format('d') ?></span>
-                </a>
-                <div class="event-summary__content">
-                    <h5 class="event-summary__title headline headline--tiny"><a href="<?php the_permalink(); ?>"><?php the_title() ?></a></h5>
-                    <p><?php  if(has_excerpt()){
-                            echo get_the_excerpt();
-                        }else{
-                            echo wp_trim_words(get_the_content(), 18);
-                        } ?><a href="<?php the_permalink(); ?>" class="nu gray">Learn more</a></p>
+                <div class="event-summary">
+                    <a class="event-summary__date t-center" href="#">
+                        <span class="event-summary__month"><?php //the_time('M')
+                                                            //the_field('event_date');
+                                                            $eventDate = new DateTime(get_field('event_date'));
+                                                            echo $eventDate->format('M');
+                                                            ?></span>
+                        <span class="event-summary__day"><?php //the_time('d')
+                                                            echo $eventDate->format('d') ?></span>
+                    </a>
+                    <div class="event-summary__content">
+                        <h5 class="event-summary__title headline headline--tiny"><a href="<?php the_permalink(); ?>"><?php the_title() ?></a></h5>
+                        <p><?php if (has_excerpt()) {
+                                echo get_the_excerpt();
+                            } else {
+                                echo wp_trim_words(get_the_content(), 18);
+                            } ?><a href="<?php the_permalink(); ?>" class="nu gray">Learn more</a></p>
+                    </div>
                 </div>
-            </div>
             <?php }
             // wp_reset_postdata() is a good habit to reset the wp_query
             wp_reset_postdata(); ?>
@@ -52,7 +71,7 @@
                 </div>
             </div> -->
 
-            <p class="t-center no-margin"><a href="<?=get_post_type_archive_link('event')?>" class="btn btn--blue">View All Events</a></p>
+            <p class="t-center no-margin"><a href="<?= get_post_type_archive_link('event') ?>" class="btn btn--blue">View All Events</a></p>
         </div>
     </div>
     <div class="full-width-split__two">
@@ -84,16 +103,16 @@
                     <div class="event-summary__content">
                         <h5 class="event-summary__title headline headline--tiny"><a href="<?php the_permalink(); ?>"><?php the_title() ?></a></h5>
                         <p><?php
-                        /**
-                         *if the excerpt is not there the main content will show we cannot trim the excerpt because it will apply globally
-                         */
-                        if(has_excerpt()){
-                            echo get_the_excerpt();
-                        }else{
-                            echo wp_trim_words(get_the_content(), 18);
-                        }
-                        
-                         ?><a href="<?php the_permalink(); ?>" class="nu gray">Read more</a></p>
+                            /**
+                             *if the excerpt is not there the main content will show we cannot trim the excerpt because it will apply globally
+                             */
+                            if (has_excerpt()) {
+                                echo get_the_excerpt();
+                            } else {
+                                echo wp_trim_words(get_the_content(), 18);
+                            }
+
+                            ?><a href="<?php the_permalink(); ?>" class="nu gray">Read more</a></p>
                     </div>
                 </div>
 
