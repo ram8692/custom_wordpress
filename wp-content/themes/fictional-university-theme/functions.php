@@ -25,6 +25,15 @@ function university_features()
 
     //setting the website title
     add_theme_support('title-tag');
+
+    //below code is used for adding feature images section
+    add_theme_support('post-thumbnails');
+
+    //below code is used for creating custom size of images 
+    //third param is true because we want excact size if we dont then we set set to false 
+    add_image_size('professorLandscape',400,260,true);
+    add_image_size('professorPortrait',480,650,true);
+
 }
 
 add_action('after_setup_theme', 'university_features');
