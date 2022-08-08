@@ -33,6 +33,8 @@ function university_features()
     //third param is true because we want excact size if we dont then we set set to false 
     add_image_size('professorLandscape',400,260,true);
     add_image_size('professorPortrait',480,650,true);
+    add_image_size('pageBanner',1500,350,true);
+
 
 }
 
