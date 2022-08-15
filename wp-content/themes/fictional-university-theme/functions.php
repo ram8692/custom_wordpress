@@ -1,5 +1,36 @@
 <?php
 
+function pageBanner($args = [])
+{
+    if (!$args['title']) {
+        $args['title'] = get_the_title();
+    }
+
+    if (!$args['subtitle']) {
+        $args['subtitle'] = get_field('page_banner_subtitle');
+    }
+    if (!$args['photo']) {
+        if (get_field('page_banner_background_image')) {
+            $args['photo'] = get_field('page_banner_background_image')['sizes']['pageBanner'];
+        } else {
+            $args['photo'] = get_theme_file_uri('/images/ocean.jpg');
+        }
+    }
+?>
+
+    <div class="page-banner">
+        <div class="page-banner__bg-image" style="background-image: url(<?= $args['photo'] ?>)">
+        </div>
+        <div class="page-banner__content container container--narrow">
+            <h1 class="page-banner__title"><?= $args['title']; ?></h1>
+            <div class="page-banner__intro">
+                <p><?= $args['subtitle'] ?></p>
+            </div>
+        </div>
+    </div>
+
+<?php }
+
 //adding css and js file 
 function university_files()
 {
@@ -31,11 +62,9 @@ function university_features()
 
     //below code is used for creating custom size of images 
     //third param is true because we want excact size if we dont then we set set to false 
-    add_image_size('professorLandscape',400,260,true);
-    add_image_size('professorPortrait',480,650,true);
-    add_image_size('pageBanner',1500,350,true);
-
-
+    add_image_size('professorLandscape', 400, 260, true);
+    add_image_size('professorPortrait', 480, 650, true);
+    add_image_size('pageBanner', 1500, 350, true);
 }
 
 add_action('after_setup_theme', 'university_features');
@@ -64,10 +93,9 @@ add_action('after_setup_theme', 'university_features');
 function university_adjust_queries($query)
 {
     if (!is_admin() and is_post_type_archive('program') and $query->is_main_query()) {
-        $query->set('orderby','meta_value_num');
-        $query->set('order','ASC');
-        $query->set('posts_per_page',-1);
-
+        $query->set('orderby', 'meta_value_num');
+        $query->set('order', 'ASC');
+        $query->set('posts_per_page', -1);
     }
 
     if (!is_admin() and is_post_type_archive('event') and $query->is_main_query()) {
@@ -80,19 +108,18 @@ function university_adjust_queries($query)
          * below code to filter out past date and sort with asc order by event date
          *
          */
-        $query->set('meta_key','event_date');
-        $query->set('orderby','meta_value_num');
-        $query->set('order','ASC');
+        $query->set('meta_key', 'event_date');
+        $query->set('orderby', 'meta_value_num');
+        $query->set('order', 'ASC');
         $today = date('Ymd');
-        $query->set('meta_query',array(
+        $query->set('meta_query', array(
             array(
-                'key'=>'event_date',
-                'compare'=>'>=',
-                'value'=>$today,
-                'type'=>'numeric'
+                'key' => 'event_date',
+                'compare' => '>=',
+                'value' => $today,
+                'type' => 'numeric'
             )
         ));
-
     }
 }
 
