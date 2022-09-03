@@ -3,12 +3,12 @@ get_header();
 
 while (have_posts()) {
     the_post();
-    pageBanner(['title'=>the_title(),'subtitle'=>'see what is going in our world']);
-    ?>
+    pageBanner(['title' => the_title(), 'subtitle' => 'see what is going in our world']);
+?>
     <div class="container container--narrow page-section">
         <div class="metabox metabox--position-up metabox--with-home-link">
             <p>
-                <a class="metabox__blog-home-link" href="<?php echo site_url('/programs'); ?>"><i class="fa fa-home" aria-hidden="true"></i> Blog Home </a> <span class="metabox__main"><?php the_title(); ?></span>
+                <a class="metabox__blog-home-link" href="<?php echo site_url('/programs'); ?>"><i class="fa fa-home" aria-hidden="true"></i> All Program </a> <span class="metabox__main"><?php the_title(); ?></span>
             </p>
         </div>
         <div class="generic-content">
@@ -46,8 +46,6 @@ while (have_posts()) {
                     </a>
                 </li>
             <?php }
-
-           
         }
 
         /**wp_reset_postdata is used for reset post query because if we use multiple query in single page then other query will not work to solve that type of issue we are using below */
@@ -83,7 +81,27 @@ while (have_posts()) {
                 $homePageEvents->the_post();
                 get_template_part('template-parts/content-event');
             }
-        } ?>
+        }
+
+        wp_reset_postdata();
+        $relatedCampuses = get_field('releted_campuses');
+        //echo 'ggg';print_r($relatedCampuses);
+        if ($relatedCampuses) {
+            echo '<hr class="section-break">';
+            echo '<h2 class="headline headline--medium">'.get_the_title().' available at this campus</h2>';
+            echo '<ul class="min-list link-list">';
+            foreach ($relatedCampuses as $campus) { ?>
+                <li>
+                    <a href="<?=get_the_permalink($campus); ?>">
+                        <?=get_the_title($campus); ?>
+                    </a>
+                </li>
+
+        <?php
+            }
+        }
+
+        ?>
 
     </div>
 <?php
